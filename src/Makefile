@@ -1,5 +1,5 @@
-#
-# Makefile
+#                                                                                                                           
+#                                                                                                                             1 # Makefile
 # Copyright (C) 2014 Michael Goehler
 #
 # This file is part of mdp.
@@ -18,32 +18,16 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-CFLAGS   = -O3 -Wall
-LDFLAGS  = -s
-LDLIBS   = -lncursesw
-SOURCES  = $(wildcard src/*.c)
-OBJECTS  = $(SOURCES:.c=.o)
-TARGET   = mdp
-DESTDIR  = /usr/bin
+OBJECTS = cstring.o cstack.o markdown.o parser.o viewer.o main.o
 
-all: $(TARGET)
+ifeq ($(DEBUG),1)
+CFLAGS  := -Wall -g -O0 -I../include
+else
+CFLAGS   = -O3 -Wall -I../include
+endif
 
-$(TARGET): src
-	$(CC) -o $(TARGET) $(LDLIBS) $(LDFLAGS) $(OBJECTS)
-
-src: 
-	$(MAKE) -C src $(MFLAGS)
+all: $(OBJECTS)
 
 clean:
-	$(MAKE) -C src clean
-	$(RM) $(TARGET)
-
-install:
-	install -d $(PREFIX)$(DESTDIR)
-	install -m 755 mdp $(PREFIX)$(DESTDIR)/$(TARGET)
-
-uninstall:
-	rm -f $(PREFIX)$(DESTDIR)/$(TARGET)
-
-.PHONY: all clean install src uninstall
+	$(RM) $(OBJECTS)
 
