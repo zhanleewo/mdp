@@ -18,13 +18,16 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-CFLAGS   = -O3 -Wall
 LDFLAGS  = -s
 LDLIBS   = -lncursesw
 SOURCES  = $(wildcard src/*.c)
 OBJECTS  = $(SOURCES:.c=.o)
 TARGET   = mdp
 DESTDIR  = /usr/bin
+
+ifeq ($(DEBUG),1)
+LDFLAGS :=
+endif
 
 all: $(TARGET)
 
