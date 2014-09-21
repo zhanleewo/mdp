@@ -32,7 +32,7 @@ endif
 all: $(TARGET)
 
 $(TARGET): src
-	$(CC) -o $(TARGET) $(LDLIBS) $(LDFLAGS) $(OBJECTS)
+	$(CC) $(OBJECTS) $(LDLIBS) $(LDFLAGS) -o $(TARGET)
 
 src: 
 	$(MAKE) -C src $(MFLAGS)
